@@ -1,12 +1,15 @@
 /**
- * Tipsta - jQuery plugin to display custom animated tooltips
+ * Tipsta - jQuery plugin to display custom animated tooltips for image maps
  *
- * @version 1.0 (2010 April 10th)
+ * @version 1.0.1 (2010 April 13th)
  * @require jQuery 1.4 or above
  * @require jQuery easing functions 1.3+ (for animation effects)
  *
  * @author Greg Knapp (virtual dot greg at gmail dot com)
  * http://www.gregk.co.uk/software/tipsta
+ *
+ * This software is licensed under the MIT license:
+ * http://www.opensource.org/licenses/mit-license.php
  */
 
 (function($) {
@@ -57,7 +60,7 @@
       }
     
       // try to obtain caption from 'alt' or 'title' attribute
-      var caption = "";
+      var caption = "<no caption>";
         
       if (_isImageMap(elem)) {
         // use area attributes, if one exists
@@ -76,6 +79,7 @@
         caption = alt;
       } else if (ttl !== undefined && alt != "") { // use title
         caption = ttl;
+        elem.removeAttr("title");
       }
       
       return caption;
@@ -125,11 +129,20 @@
         left = Math.round(mapWidth / 2) + x[0];
       
         // get the image using this map
-        var img = $("img[usemap=\\#" + elem.attr("id") + "]");
+        var img;
+        
+        $.each($("img[usemap]"), function(i, image) {
+            image = $(image);
+
+            if (image.attr("usemap").substr(1) == elem.attr("id")) {
+                img = image;
+            }
+        });
         
         if (!img.length) {
           throw new Error(
-            "Could not find an image using map " + elem.attr("id")
+            "Could not find an image using map " + elem.attr("id") +
+            ", selector: img[usemap=\\#" + elem.attr("id") + "]"
           );
         }
         
