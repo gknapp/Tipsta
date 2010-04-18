@@ -1,2 +1,3 @@
 # ignore all hidden files (.DStore etc)
 .*
+*.jar
