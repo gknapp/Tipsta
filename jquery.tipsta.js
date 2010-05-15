@@ -55,6 +55,13 @@
     }
     
     function _getCaption(elem, cap) {
+      var ttl = elem.attr("title");
+      
+      // make title attr blank to stop 
+      // tooltip being displayed in IE
+      // note: does not work for imagemaps
+      elem.attr("title","");
+        
       if (cap !== undefined && cap != "") { // caption specified
         return cap;
       }
@@ -73,13 +80,11 @@
       }
       
       var alt = elem.attr("alt");
-      var ttl = elem.attr("title");
       
       if (alt !== undefined && alt != "") { // use alt
         caption = alt;
       } else if (ttl !== undefined && alt != "") { // use title
         caption = ttl;
-        elem.removeAttr("title");
       }
       
       return caption;
