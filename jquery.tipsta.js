@@ -204,6 +204,12 @@
       
       $(this).hover(
         function(e) {
+          // prevent queue backlog if mouseover tooltip
+          if (tip.queue("fx").length > 1) {
+            tip.clearQueue();
+            return;
+          }
+          
           tip.fadeIn(options.duration).animate(
             { top: position.top - options.distance },
             {
