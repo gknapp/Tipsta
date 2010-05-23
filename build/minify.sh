@@ -1,5 +1,9 @@
 #!/bin/bash
 # Script to compile minified version of Tipsta
+#
+# Dependencies (on Ubuntu):
+#   Java from partners repository: apt-get install sun-java6-jre
+#   Bash calculator: apt-get install bc
 
 JSSRC="../jquery.tipsta.js"
 JSMIN="../jquery.tipsta.min.js"
